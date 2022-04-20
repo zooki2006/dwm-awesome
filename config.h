@@ -114,7 +114,6 @@ static const char *keycmd[] = {"x", "keepassxc", NULL };
 //static const char *firefox[] = {"x", "keepassxc", NULL }; 
 //static const char *noisecmd[] = {"x", "noisetorch", NULL }; 
 
-#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     iey        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -131,21 +130,23 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 /*	{ MODKEY,                       XK_z,      spawn,          {.v = steamcmd } }, */
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_j,      focusstackvis,  {.i = +1 } },
+	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_j,      focusstackhid,  {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_k,      focusstackhid,  {.i = -1 } },
 	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[2]} },
-
+	{ MODKEY|ControlMask,           XK_s,      show,           {0} },
+	{ MODKEY|ControlMask,           XK_h,      hide,           {0} },
+	
 /*	{ MODKEY|ShiftMask,             XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_r,      fullscreen,     {0} }, */
 
@@ -167,14 +168,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      togglescratch,  {.v = ncspotcmd } },
 	{ MODKEY,                       XK_x,      togglescratch,  {.v = keycmd } },
 	{ MODKEY,                       XK_z,      togglescratch,  {.v = steamcmd } },
-/*	{ MODKEY,            		XK_y,  	   togglescratch,  {.ui = 0 } }, coverted
- *	{ MODKEY,            		XK_u,	   togglescratch,  {.ui = 1 } }, 
- *	{ MODKEY,            		XK_x,	   togglescratch,  {.ui = 2 } }, coverted
- *	{ MODKEY,            		XK_w,	   togglescratch,  {.ui = 3 } }, converted
- *	{ MODKEY,            		XK_s,	   togglescratch,  {.ui = 4 } }, converted
- *	{ MODKEY,            		XK_z,	   togglescratch,  {.ui = 5 } }, converted
- *	{ MODKEY,            		XK_a,	   togglescratch,  {.ui = 6 } }, converted
- *	{ MODKEY,            		XK_i,	   togglescratch,  {.ui = 7 } }, converted*/
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -185,7 +178,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_Escape,      quit,           {0} },
-	/* old binds remove later1 ?*/
+	/* old binds remove later ?*/
 /*	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
  *	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
  *	{ MODKEY,                       XK_b,      togglebar,      {0} },

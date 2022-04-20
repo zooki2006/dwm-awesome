@@ -28,7 +28,7 @@ movestack(const Arg *arg) {
 	}
 
 	/* swap c and selmon->sel selmon->clients in the selmon->clients list */
-	if(c && c != selmon->sel) {
+	if(c && c != selmon->sel && (!HIDDEN(c) || !HIDDEN(selmon->sel))) {
 		Client *temp = selmon->sel->next==c?selmon->sel:selmon->sel->next;
 		selmon->sel->next = c->next==selmon->sel?c:c->next;
 		c->next = temp;
