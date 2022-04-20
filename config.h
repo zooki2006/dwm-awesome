@@ -114,6 +114,7 @@ static const char *keycmd[] = {"x", "keepassxc", NULL };
 //static const char *firefox[] = {"x", "keepassxc", NULL }; 
 //static const char *noisecmd[] = {"x", "noisetorch", NULL }; 
 
+#include "push.c"
 static Key keys[] = {
 	/* modifier                     iey        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -134,6 +135,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_j,      focusstackhid,  {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_k,      focusstackhid,  {.i = -1 } },
+	{ MODKEY|ShiftMask,           XK_j,      pushdown,       {0} },
+	{ MODKEY|ShiftMask,           XK_k,      pushup,         {0} },
 	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
