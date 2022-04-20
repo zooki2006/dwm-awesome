@@ -32,11 +32,14 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        0  },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },     
 	{ NULL,       NULL,   "splistbinds",  0,            1,           -1,       'l' },    
-	{ NULL,       NULL,      "spcmus",    0,            1,           -1,       'c' },
+	{ "spcmus",   NULL,      NULL,        0,            1,           -1,       'c' },
 	{ NULL,       NULL,      "spncspot",  0,            1,           -1,       'w' },
 	{ NULL,       NULL,      "sppod",     0,            1,           -1,       'a' },
-	{ NULL,      "Steam",     NULL,       0,            0,           -1,       'z' },
- 	{ NULL,	     "keepassxc", NULL,	      0,	    1,           -1,       'x' },
+/*	{ "Steam",    NULL,       NULL,       0,            1,           -1,       'z' }, */
+	{ "Steam",    NULL,       NULL,       0,            1,           -1,        0 }, 
+	{ "discord",  NULL,      "Discord Updater",  0,            1,           -1,        0 }, 
+	{ "Steam",    NULL,     "Steam",      0,            0,           -1,       'z' }, 
+ 	{ NULL,	     "keepassxc", NULL,	       0,	    1,           -1,       'x' },
  /*	{ NULL,	     "Modded Slay the Spire", NULL,	    0,	    1,           -1,       0 }, */
 	/* class      instance    title       tags mask     isfloating   monitor */
 /*  	{ "Gimp",     NULL,       NULL,           0,            1,           -1 },
@@ -106,7 +109,7 @@ static const char *nyrna[] = {"nyrna", NULL };
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
 static const char *listcmd[] = {"l", "st", "-t", "splistbinds", "-e", "binds.sh", NULL }; 
-static const char *cmuscmd[] = {"c", "st", "-t", "spcmus", "-g", "120x34", "-e", "cmus", NULL };
+static const char *cmuscmd[] = {"c", "st", "-c", "spcmus", "-e", "cmus", NULL };
 static const char *podcmd[] = {"a", "st", "-t", "sppod", "-g", "120x34", "-e", "castero", NULL };
 static const char *ncspotcmd[] = {"w", "st", "-t", "spncspot", "-g", "120x34", "-e", "ncspot", NULL };
 static const char *steamcmd[] = {"z", "steam", NULL }; 
@@ -119,6 +122,7 @@ static Key keys[] = {
 	/* modifier                     iey        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Print,  spawn,          SHCMD("scrot -e 'mv $f ~/screenshot'")}, 
+	{ MODKEY,                       XK_n,      spawn,          SHCMD("dmenu-tray.sh")}, 
         { MODKEY,                       XK_F4,     spawn,          SHCMD("amixer set Capture toggle") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = i3dmenucmd } },	
 	{ MODKEY,                       XK_c,      spawn,          {.v = bluecmd } },
