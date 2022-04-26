@@ -29,16 +29,24 @@ static const Rule rules[] = {
          *      WM_NAME(STRING) = title
          */
  	/* class      instance    title       tags mask     isfloating   monitor    scratch  */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        0  },
+	{ "Gimp",     NULL,       NULL,       0,            0,           -1,        0  },
+	{ "Nyrna",    NULL,       NULL,       0,            1,           -1,       'm' },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },     
 	{ NULL,       NULL,   "splistbinds",  0,            1,           -1,       'l' },    
+	{ "Mullvad VPN", NULL,    NULL,       0,            1,           -1,       'r' },    
 	{ "spcmus",   NULL,      NULL,        0,            1,           -1,       'c' },
 	{ NULL,       NULL,      "spncspot",  0,            1,           -1,       'w' },
 	{ NULL,       NULL,      "sppod",     0,            1,           -1,       'a' },
+
+	{ "discord",  NULL,      "Discord Updater",  0,     1,           -1,        0 }, 
+	/* steam fixes */
 /*	{ "Steam",    NULL,       NULL,       0,            1,           -1,       'z' }, */
 	{ "Steam",    NULL,       NULL,       0,            1,           -1,        0 }, 
-	{ "discord",  NULL,      "Discord Updater",  0,            1,           -1,        0 }, 
 	{ "Steam",    NULL,     "Steam",      0,            0,           -1,       'z' }, 
+	{ "Steam",    NULL,     "Steam Dialog", 0,          1,           -1,        0  }, 
+	{ "Steam",    NULL,     "- Steam",    ~0,           1,           -1,        0  }, 
+	{ "Steam",    NULL,     "Updating",    ~0,           1,           -1,        0  }, 
+	{ "Steam",    NULL,     "Ready",    ~0,           1,           -1,        0  }, 
  	{ NULL,	     "keepassxc", NULL,	       0,	    1,           -1,       'x' },
  /*	{ NULL,	     "Modded Slay the Spire", NULL,	    0,	    1,           -1,       0 }, */
 	/* class      instance    title       tags mask     isfloating   monitor */
@@ -100,20 +108,24 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *i3dmenucmd[] = { "i3-dmenu-desktop", NULL };
 static const char *powercmd[] = { "rofi-power-menu", NULL }; 
 static const char *bluecmd[] = {"rofi-bluetooth", NULL };
+static const char *dmenutraycmd[]  = { "dmenu-tray.sh", NULL };
 /* programs */
 /* static const char *steamcmd[] = { "steam", NULL }; */
 static const char *webcmd[] = {"firefox", NULL };
-static const char *nyrna[] = {"nyrna", NULL };
+/* static const char *nyrna[] = {"nyrna", NULL }; */
+static const char *lockcmd[] = {"slock", NULL };
 
 /* scratchpads */
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
 static const char *listcmd[] = {"l", "st", "-t", "splistbinds", "-e", "binds.sh", NULL }; 
-static const char *cmuscmd[] = {"c", "st", "-c", "spcmus", "-e", "cmus", NULL };
+static const char *cmuscmd[] = {"c", "st", "-c", "spcmus", "-g", "120x34", "-e", "cmus", NULL };
 static const char *podcmd[] = {"a", "st", "-t", "sppod", "-g", "120x34", "-e", "castero", NULL };
 static const char *ncspotcmd[] = {"w", "st", "-t", "spncspot", "-g", "120x34", "-e", "ncspot", NULL };
 static const char *steamcmd[] = {"z", "steam", NULL }; 
 static const char *keycmd[] = {"x", "keepassxc", NULL }; 
+static const char *nyrnacmd[] = {"m", "nyrna", NULL };
+static const char *mullvadcmd[] = {"r", "mullvad-vpn", NULL };
 //static const char *firefox[] = {"x", "keepassxc", NULL }; 
 //static const char *noisecmd[] = {"x", "noisetorch", NULL }; 
 
@@ -122,16 +134,17 @@ static Key keys[] = {
 	/* modifier                     iey        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Print,  spawn,          SHCMD("scrot -e 'mv $f ~/screenshot'")}, 
-	{ MODKEY,                       XK_n,      spawn,          SHCMD("dmenu-tray.sh")}, 
+	{ MODKEY,                       XK_n,      spawn,          {.v = dmenutraycmd }}, 
         { MODKEY,                       XK_F4,     spawn,          SHCMD("amixer set Capture toggle") },
+        { MODKEY|ShiftMask,             XK_f,     spawn,          SHCMD("wmctrl -r ':ACTIVE:' -b toggle,fullscreen") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = i3dmenucmd } },	
 	{ MODKEY,                       XK_c,      spawn,          {.v = bluecmd } },
-	{ MODKEY,                       XK_v,      spawn,          SHCMD("ifbrowser.sh dmenu_websearch")},
-	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("ifbrowser.sh dmenu_bookmarks_menu")},
+	{ MODKEY,                       XK_v,      spawn,          SHCMD("dmenu_websearch")},
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("dmenu_bookmarks_menu")},
 	{ MODKEY,                       XK_m,  	   spawn,          SHCMD("nyrna -t")}, 
-	{ MODKEY|ShiftMask,             XK_m,  	   spawn,          {.v = nyrna } }, 
+/*	{ MODKEY|ShiftMask,             XK_m,  	   spawn,          {.v = nyrna } }, */ 
 	{ MODKEY,                       XK_e,      spawn,          {.v = webcmd } },
-	{ MODKEY,                       XK_Pause,  spawn,          {.v = powercmd} },
+	{ MODKEY,                       XK_Pause,  spawn,          {.v = lockcmd} },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 /*	{ MODKEY,                       XK_z,      spawn,          {.v = steamcmd } }, */
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -139,8 +152,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_j,      focusstackhid,  {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_k,      focusstackhid,  {.i = -1 } },
-	{ MODKEY|ShiftMask,           XK_j,      pushdown,       {0} },
-	{ MODKEY|ShiftMask,           XK_k,      pushup,         {0} },
+	{ MODKEY|ShiftMask,             XK_j,      pushdown,       {0} },
+	{ MODKEY|ShiftMask,             XK_k,      pushup,         {0} },
 	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -152,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ControlMask,           XK_s,      show,           {0} },
-	{ MODKEY|ControlMask,           XK_h,      hide,           {0} },
+	{ MODKEY,                       XK_s,      hide,           {0} },
 	
 /*	{ MODKEY|ShiftMask,             XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_r,      fullscreen,     {0} }, */
@@ -170,11 +183,13 @@ static Key keys[] = {
 	{0,                             AudioMute,	spawn,	SHCMD("volumeControl.sh mute")  },
 	{ MODKEY,                       XK_y,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_i,      togglescratch,  {.v = listcmd } },
-	{ MODKEY,                       XK_s,      togglescratch,  {.v = cmuscmd } },
-	{ MODKEY,                       XK_a,      togglescratch,  {.v = podcmd } },
-	{ MODKEY,                       XK_w,      togglescratch,  {.v = ncspotcmd } },
+	{ MODKEY,                       XK_a,      togglescratch,  {.v = cmuscmd } },
+	{ MODKEY|ShiftMask,             XK_a,      togglescratch,  {.v = podcmd } },
+	{ MODKEY|ControlMask,           XK_a,      togglescratch,  {.v = ncspotcmd } },
 	{ MODKEY,                       XK_x,      togglescratch,  {.v = keycmd } },
 	{ MODKEY,                       XK_z,      togglescratch,  {.v = steamcmd } },
+	{ MODKEY|ShiftMask,             XK_m,      togglescratch,  {.v = nyrnacmd } },
+	{ MODKEY,                       XK_r,      togglescratch,  {.v = mullvadcmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -234,7 +249,8 @@ static Button buttons[] = {
 	{ ClkWinTitle,          0,              Button1,        togglewin,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+/*	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } }, */
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = dmenutraycmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY|ShiftMask, Button1,        resizemouse,    {0} },
