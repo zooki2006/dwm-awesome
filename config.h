@@ -107,7 +107,7 @@ static const char *termcmd[]  = { "st", NULL };
 /* rofi/dmenu */
 static const char *i3dmenucmd[] = { "i3-dmenu-desktop", NULL };
 static const char *powercmd[] = { "rofi-power-menu", NULL }; 
-static const char *bluecmd[] = {"rofi-bluetooth", NULL };
+/* static const char *bluecmd[] = {"rofi-bluetooth", NULL }; */
 static const char *dmenutraycmd[]  = { "dmenu-tray.sh", NULL };
 /* programs */
 /* static const char *steamcmd[] = { "steam", NULL }; */
@@ -138,7 +138,6 @@ static Key keys[] = {
         { MODKEY,                       XK_F4,     spawn,          SHCMD("amixer set Capture toggle") },
         { MODKEY|ShiftMask,             XK_f,     spawn,          SHCMD("wmctrl -r ':ACTIVE:' -b toggle,fullscreen") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = i3dmenucmd } },	
-	{ MODKEY,                       XK_c,      spawn,          {.v = bluecmd } },
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("dmenu_websearch")},
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("dmenu_bookmarks_menu")},
 	{ MODKEY,                       XK_m,  	   spawn,          SHCMD("nyrna -t")}, 
@@ -158,6 +157,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,             		XK_c, 	   center,           {0} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
@@ -259,5 +259,4 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
 

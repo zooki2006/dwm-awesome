@@ -250,6 +250,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void center(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
@@ -743,7 +744,7 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	int x, w, tw = 0, sw = 0, n = 0, scm;
+	int x, w, tw = 0, n = 0, scm;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
@@ -2367,6 +2368,20 @@ zoom(const Arg *arg)
 			return;
 	pop(c);
 }
+
+void 
+center(const Arg *arg)
+{
+
+	Client *c = selmon->sel;
+	if (c->isfloating)
+	{
+		c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+		c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+	}
+	XMoveWindow(dpy, c->win, c->x, c->y);
+}
+
 
 int
 main(int argc, char *argv[])
