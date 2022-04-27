@@ -106,14 +106,14 @@ static const char *termcmd[]  = { "st", NULL };
 /* mercy cmds */
 /* rofi/dmenu */
 static const char *i3dmenucmd[] = { "i3-dmenu-desktop", NULL };
-static const char *powercmd[] = { "rofi-power-menu", NULL }; 
+/* static const char *powercmd[] = { "rofi-power-menu", NULL }; */
 /* static const char *bluecmd[] = {"rofi-bluetooth", NULL }; */
 static const char *dmenutraycmd[]  = { "dmenu-tray.sh", NULL };
 /* programs */
 /* static const char *steamcmd[] = { "steam", NULL }; */
 static const char *webcmd[] = {"firefox", NULL };
 /* static const char *nyrna[] = {"nyrna", NULL }; */
-static const char *lockcmd[] = {"slock", NULL };
+static const char *lockcmd[] = {"manlock.sh", NULL };
 
 /* scratchpads */
 /*First arg only serves to match against key in rules*/
