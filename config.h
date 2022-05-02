@@ -44,7 +44,7 @@ static const Rule rules[] = {
 	{ "Steam",    NULL,       NULL,       0,            1,           -1,        0 }, 
 	{ "Steam",    NULL,     "Steam",      0,            0,           -1,       'z' }, 
 	{ "Steam",    NULL,     "Steam Dialog", 0,          1,           -1,        0  }, 
-	{ "Steam",    NULL,     "- Steam",    ~0,           1,           -1,        0  }, 
+	{ "Steam",    NULL,     "-",    ~0,           1,           -1,        0  }, 
 	{ "Steam",    NULL,     "Updating",    ~0,           1,           -1,        0  }, 
 	{ "Steam",    NULL,     "Ready",    ~0,           1,           -1,        0  }, 
  	{ NULL,	     "keepassxc", NULL,	       0,	    1,           -1,       'x' },
@@ -141,6 +141,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("dmenu_websearch")},
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("dmenu_bookmarks_menu")},
 	{ MODKEY,                       XK_m,  	   spawn,          SHCMD("nyrna -t")}, 
+	{ MODKEY,                       XK_w,      spawn,          SHCMD("discord")}, 
 /*	{ MODKEY|ShiftMask,             XK_m,  	   spawn,          {.v = nyrna } }, */ 
 	{ MODKEY,                       XK_e,      spawn,          {.v = webcmd } },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = lockcmd} },
@@ -164,6 +165,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[2]} },
+
 	{ MODKEY|ControlMask,           XK_s,      show,           {0} },
 	{ MODKEY,                       XK_s,      hide,           {0} },
 	
