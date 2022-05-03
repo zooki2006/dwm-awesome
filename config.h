@@ -41,13 +41,14 @@ static const Rule rules[] = {
 	{ "discord",  NULL,      "Discord Updater",  0,     1,           -1,        0 }, 
 	/* steam fixes */
 /*	{ "Steam",    NULL,       NULL,       0,            1,           -1,       'z' }, */
-	{ "Steam",    NULL,       NULL,       0,            1,           -1,        0 }, 
+	{ "Steam",    NULL,       NULL,       4,            1,           -1,        0 }, 
 	{ "Steam",    NULL,     "Steam",      0,            0,           -1,       'z' }, 
 	{ "Steam",    NULL,     "Steam Dialog", 0,          1,           -1,        0  }, 
 	{ "Steam",    NULL,     "-",    ~0,           1,           -1,        0  }, 
 	{ "Steam",    NULL,     "Updating",    ~0,           1,           -1,        0  }, 
 	{ "Steam",    NULL,     "Ready",    ~0,           1,           -1,        0  }, 
  	{ NULL,	     "keepassxc", NULL,	       0,	    1,           -1,       'x' },
+	{ "steam_app_", NULL,       NULL,    5,            1,           -1,        0 }, 
  /*	{ NULL,	     "Modded Slay the Spire", NULL,	    0,	    1,           -1,       0 }, */
 	/* class      instance    title       tags mask     isfloating   monitor */
 /*  	{ "Gimp",     NULL,       NULL,           0,            1,           -1 },
@@ -111,7 +112,8 @@ static const char *i3dmenucmd[] = { "i3-dmenu-desktop", NULL };
 static const char *dmenutraycmd[]  = { "dmenu-tray.sh", NULL };
 /* programs */
 /* static const char *steamcmd[] = { "steam", NULL }; */
-static const char *webcmd[] = {"firefox", NULL };
+static const char *webcmd[] = {"qutebrowser", NULL };
+static const char *secwebcmd[] = {"firefox", NULL };
 /* static const char *nyrna[] = {"nyrna", NULL }; */
 static const char *lockcmd[] = {"manlock.sh", NULL };
 
@@ -144,6 +146,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("discord")}, 
 /*	{ MODKEY|ShiftMask,             XK_m,  	   spawn,          {.v = nyrna } }, */ 
 	{ MODKEY,                       XK_e,      spawn,          {.v = webcmd } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = secwebcmd } },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = lockcmd} },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 /*	{ MODKEY,                       XK_z,      spawn,          {.v = steamcmd } }, */
