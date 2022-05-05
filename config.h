@@ -41,14 +41,13 @@ static const Rule rules[] = {
 	{ "discord",  NULL,      "Discord Updater",  0,     1,           -1,        0 }, 
 	/* steam fixes */
 /*	{ "Steam",    NULL,       NULL,       0,            1,           -1,       'z' }, */
-	{ "Steam",    NULL,       NULL,       4,            1,           -1,        0 }, 
+	{ "Steam",    NULL,       NULL,       0,            1,           -1,        0 }, 
 	{ "Steam",    NULL,     "Steam",      0,            0,           -1,       'z' }, 
-	{ "Steam",    NULL,     "Steam Dialog", 0,          1,           -1,        0  }, 
+	{ "Steam",    NULL,     "Steam Dialog", ~0,          1,           -1,        0  }, 
 	{ "Steam",    NULL,     "-",    ~0,           1,           -1,        0  }, 
 	{ "Steam",    NULL,     "Updating",    ~0,           1,           -1,        0  }, 
 	{ "Steam",    NULL,     "Ready",    ~0,           1,           -1,        0  }, 
  	{ NULL,	     "keepassxc", NULL,	       0,	    1,           -1,       'x' },
-	{ "steam_app_", NULL,       NULL,    5,            1,           -1,        0 }, 
  /*	{ NULL,	     "Modded Slay the Spire", NULL,	    0,	    1,           -1,       0 }, */
 	/* class      instance    title       tags mask     isfloating   monitor */
 /*  	{ "Gimp",     NULL,       NULL,           0,            1,           -1 },
