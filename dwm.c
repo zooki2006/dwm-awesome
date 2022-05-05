@@ -2448,8 +2448,10 @@ zoom(const Arg *arg)
 void 
 center(const Arg *arg)
 {
-
 	Client *c = selmon->sel;
+	if(!c)
+		return;
+
 	if (c->isfloating)
 	{
 		c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
