@@ -32,11 +32,12 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1,        0  },
 	{ "Nyrna",    NULL,       NULL,       0,            1,           -1,       'm' },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },     
+	{ NULL,  "dwmtabbed", NULL,       0,            1,           -1,       'n' },     
 	{ NULL,       NULL,   "splistbinds",  0,            1,           -1,       'l' },    
 	{ "Mullvad VPN", NULL,    NULL,       0,            1,           -1,       'r' },    
 	{ "spcmus",   NULL,      NULL,        0,            1,           -1,       'c' },
-	{ NULL,       NULL,      "spncspot",  0,            1,           -1,       'w' },
-	{ NULL,       NULL,      "sppod",     0,            1,           -1,       'a' },
+	{ "spncspot", NULL,      NULL,  0,            1,           -1,       'w' },
+	{ "sppod",    NULL,      NULL,     0,            1,           -1,       'a' },
 
 	{ "discord",  NULL,      "Discord Updater",  0,     1,           -1,        0 }, 
 	/* steam fixes */
@@ -85,15 +86,17 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 
-#define BrightDown	0x1008ff03
+/* #define BrightDown	0x1008ff03
 #define BrightUp	0x1008ff02
-#define AudioMute	0x1008ff12
 #define AudioPlay	0x1008ff14
 #define AudioNext	0x1008ff17
 #define AudioPrev	0x1008ff16
+#define AudioMute	0x1008ff12
 #define AudioDown	0x1008ff11
 #define AudioUp		0x1008ff13
-#define Print		0xff61
+#define Print		0xff61 */
+#include <X11/XF86keysym.h>
+
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -111,22 +114,36 @@ static const char *i3dmenucmd[] = { "i3-dmenu-desktop", NULL };
 static const char *dmenutraycmd[]  = { "dmenu-tray.sh", NULL };
 /* programs */
 /* static const char *steamcmd[] = { "steam", NULL }; */
-static const char *webcmd[] = {"qutebrowser", NULL };
-static const char *secwebcmd[] = {"firefox", NULL };
+
+/* static const char *webcmd[] = {"qutebrowser", NULL };
+ * static const char *secwebcmd[] = {"firefox", NULL }; */
+
+static const char *secwebcmd[] = {"qutebrowser", NULL };
+static const char *webcmd[] = {"firefox", NULL };
+
 /* static const char *nyrna[] = {"nyrna", NULL }; */
 static const char *lockcmd[] = {"manlock.sh", NULL };
+
+/* Control Media Players */
+static const char *medplaypausecmd[] = { "playerctl", "play-pause", NULL };
+static const char *mednextcmd[] = { "playerctl", "next", NULL };
+static const char *medprevcmd[] = { "playerctl", "previous", NULL };
+
+
+
 
 /* scratchpads */
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
 static const char *listcmd[] = {"l", "st", "-t", "splistbinds", "-e", "binds.sh", NULL }; 
 static const char *cmuscmd[] = {"c", "st", "-c", "spcmus", "-g", "120x34", "-e", "cmus", NULL };
-static const char *podcmd[] = {"a", "st", "-t", "sppod", "-g", "120x34", "-e", "castero", NULL };
-static const char *ncspotcmd[] = {"w", "st", "-t", "spncspot", "-g", "120x34", "-e", "ncspot", NULL };
+static const char *podcmd[] = {"a", "st", "-c", "sppod", "-g", "120x34", "-e", "castero", NULL }; 
+static const char *ncspotcmd[] = {"w", "st", "-c", "spncspot", "-g", "120x34", "-e", "ncspot", NULL }; 
 static const char *steamcmd[] = {"z", "steam", NULL }; 
 static const char *keycmd[] = {"x", "keepassxc", NULL }; 
 static const char *nyrnacmd[] = {"m", "nyrna", NULL };
 static const char *mullvadcmd[] = {"r", "mullvad-vpn", NULL };
+static const char *tabbedcmd[] = {"n", "tabc.sh", "autoadd", "-n", "dwmtabbed", NULL };
 //static const char *firefox[] = {"x", "keepassxc", NULL }; 
 //static const char *noisecmd[] = {"x", "noisetorch", NULL }; 
 
@@ -135,6 +152,9 @@ static Key keys[] = {
 	/* modifier                     iey        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Print,  spawn,          SHCMD("scrot -e 'mv $f ~/screenshot'")}, 
+	{ MODKEY,                       XK_r,      spawn,          SHCMD("tabc.sh autoadd -n dwmtabbed")}, 
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("tabc.sh autoremove -n dwmtabbed")}, 
+	{ MODKEY|ControlMask,           XK_r,      togglescratch,  {.v = tabbedcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = dmenutraycmd }}, 
         { MODKEY,                       XK_F4,     spawn,          SHCMD("amixer set Capture toggle") },
         { MODKEY|ShiftMask,             XK_f,     spawn,          SHCMD("wmctrl -r ':ACTIVE:' -b toggle,fullscreen") },
@@ -154,6 +174,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_j,      focusstackhid,  {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_k,      focusstackhid,  {.i = -1 } },
+	{ Mod1Mask,           XK_Tab,      focusstackhid,  {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      pushdown,       {0} },
 	{ MODKEY|ShiftMask,             XK_k,      pushup,         {0} },
 	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
@@ -182,18 +203,22 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	/* VOLUME */
-	{0,                             AudioDown,	spawn,	SHCMD("volumeControl.sh down")  },
-	{0,                             AudioUp,	spawn,	SHCMD("volumeControl.sh up")  },
-	{0,                             AudioMute,	spawn,	SHCMD("volumeControl.sh mute")  },
+	{0,                             XF86XK_AudioLowerVolume,	spawn,	SHCMD("volumeControl.sh down")  },
+	{0,                             XF86XK_AudioRaiseVolume,	spawn,	SHCMD("volumeControl.sh up")  },
+	{0,                             XF86XK_AudioMute,	spawn,	SHCMD("volumeControl.sh mute")  },
+	/* Keybindings for Media play/pause/next/previous */
+	{ 0, XF86XK_AudioPlay, spawn, {.v = medplaypausecmd } },
+	{ 0, XF86XK_AudioNext, spawn, {.v = mednextcmd } },
+	{ 0, XF86XK_AudioPrev, spawn, {.v = medprevcmd } },
 	{ MODKEY,                       XK_y,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_i,      togglescratch,  {.v = listcmd } },
 	{ MODKEY,                       XK_a,      togglescratch,  {.v = cmuscmd } },
 	{ MODKEY|ShiftMask,             XK_a,      togglescratch,  {.v = podcmd } },
-	{ MODKEY|ControlMask,           XK_a,      togglescratch,  {.v = ncspotcmd } },
+	{ MODKEY|ControlMask,           XK_a,      togglescratch,  {.v = ncspotcmd } }, 
 	{ MODKEY,                       XK_x,      togglescratch,  {.v = keycmd } },
 	{ MODKEY,                       XK_z,      togglescratch,  {.v = steamcmd } },
 	{ MODKEY|ShiftMask,             XK_m,      togglescratch,  {.v = nyrnacmd } },
-	{ MODKEY,                       XK_r,      togglescratch,  {.v = mullvadcmd } },
+	{ MODKEY,                       XK_bracketleft,      togglescratch,  {.v = mullvadcmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
