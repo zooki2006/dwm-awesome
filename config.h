@@ -33,7 +33,8 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1,        0  },
 	{ "Nyrna",    NULL,       NULL,       0,            1,           -1,       'm' },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },     
-	{ NULL,  "dwmtabbed", NULL,       0,            1,           -1,       'n' },     
+	{ NULL,  "dwmtabbed",     NULL,       0,            1,           -1,       'n' },     
+	{ NULL,  "discordtabbed", NULL,       0,            1,           -1,       'd' },     
 	{ NULL,       NULL,   "splistbinds",  0,            1,           -1,       'l' },    
 	{ "Mullvad VPN", NULL,    NULL,       0,            1,           -1,       'r' },    
 	{ "spcmus",   NULL,      NULL,        0,            1,           -1,       'c' },
@@ -145,6 +146,7 @@ static const char *keycmd[] = {"x", "keepassxc", NULL };
 static const char *nyrnacmd[] = {"m", "nyrna", NULL };
 static const char *mullvadcmd[] = {"r", "mullvad-vpn", NULL };
 static const char *tabbedcmd[] = {"n", "tabc.sh", "autoadd", "-n", "dwmtabbed", NULL };
+static const char *discordcmd[] = {"d", "discordtabbed.sh", NULL };
 //static const char *firefox[] = {"x", "keepassxc", NULL }; 
 //static const char *noisecmd[] = {"x", "noisetorch", NULL }; 
 
@@ -163,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("dmenu_websearch")},
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("dmenu_bookmarks_menu")},
 	{ MODKEY,                       XK_m,  	   spawn,          SHCMD("nyrna -t")}, 
-	{ MODKEY,                       XK_w,      spawn,          SHCMD("discord")}, 
+	{ MODKEY,                       XK_w,      togglescratch,  {.v = discordcmd } },
 /*	{ MODKEY|ShiftMask,             XK_m,  	   spawn,          {.v = nyrna } }, */ 
 	{ MODKEY,                       XK_e,      spawn,          {.v = webcmd } },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = secwebcmd } },
